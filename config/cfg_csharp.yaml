@@ -1,0 +1,68 @@
+# Configuration for C# Programming Training with HRM
+
+# Data path (will be overridden by command line)
+data_path: data/csharp-programming-1k
+
+# Architecture configuration
+arch:
+  name: models.hrm.hrm_act_v1@HierarchicalReasoningModel_ACTV1
+  
+  # HRM specific parameters optimized for code generation
+  H_cycles: 6              # High-level planning cycles (architectural decisions)
+  L_cycles: 12             # Low-level implementation cycles (detailed code generation)
+  
+  H_layers: 4              # High-level transformer layers
+  L_layers: 6              # Low-level transformer layers
+  
+  # Transformer configuration
+  hidden_size: 512         # Hidden dimension
+  expansion: 2.67          # FFN expansion ratio
+  num_heads: 8             # Attention heads
+  
+  # Position encodings
+  pos_encodings: rotary    # Use rotary position embeddings for code sequences
+  
+  # Adaptive Computation Time parameters
+  halt_max_steps: 16       # Maximum computation steps
+  halt_threshold: 0.99     # Halting threshold
+  
+  # Loss configuration
+  loss:
+    name: models.losses@CrossEntropyLoss
+    loss_type: cross_entropy
+    label_smoothing: 0.1   # Slight label smoothing for code generation
+
+# Training hyperparameters optimized for small-sample learning
+epochs: 5000
+eval_interval: 500
+
+# Batch size (adjust based on GPU memory)
+global_batch_size: 128
+
+# Learning rates
+lr: 5e-5                 # Main model learning rate
+lr_min_ratio: 0.01       # Minimum LR ratio for cosine schedule
+lr_warmup_steps: 100     # Warmup steps
+
+puzzle_emb_lr: 5e-5      # Puzzle embedding learning rate
+
+# Regularization
+weight_decay: 0.01       # Weight decay for main parameters
+beta1: 0.9              # Adam beta1
+beta2: 0.999            # Adam beta2
+
+puzzle_emb_weight_decay: 0.01  # Weight decay for puzzle embeddings
+
+# Experiment tracking
+project_name: "CSharp-Programming HRM"
+run_name: null           # Will be auto-generated
+
+# Checkpointing
+checkpoint_path: null    # Will be auto-generated
+checkpoint_every_eval: true
+
+# Evaluation
+eval_save_outputs: ["predictions", "targets"]  # Save predictions for analysis
+
+# Random seed
+seed: 42

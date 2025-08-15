@@ -2,7 +2,7 @@ import json
 import os
 import sys
 
-def split_json_file(input_file, max_size_mb=100):
+def split_json_file(input_file, max_size_mb=50):
     """
     Split a large JSON file into smaller chunks while preserving JSON structure.
     
@@ -78,14 +78,14 @@ def split_json_file(input_file, max_size_mb=100):
     print(f"\nSplit complete! Created {chunk_number - 1} files.")
 
 if __name__ == "__main__":
-    input_file = "c-codes-in-train-dataset.json"
+    input_file = "../rust/rust-code-selection.json"
     
     if not os.path.exists(input_file):
         print(f"Error: {input_file} not found")
         sys.exit(1)
     
     try:
-        split_json_file(input_file, max_size_mb=100)
+        split_json_file(input_file, max_size_mb=50)
     except Exception as e:
         print(f"Error: {e}")
         sys.exit(1)
